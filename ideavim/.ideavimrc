@@ -9,6 +9,8 @@ set autoindent
 set number
 set showcmd
 set showmode
+set visualbell
+set noerrorbells
 nmap <leader>uw <Action>(EditorToggleUseSoftWraps)
 
 " search
@@ -16,9 +18,7 @@ set hlsearch
 set incsearch
 set ignorecase
 set smartcase
-
-" system clipboard
-set clipboard+=unnamed
+nmap <leader>nh :nohlsearch<CR>
 
 let mapleader=" "
 let g:mapleader=" "
@@ -26,7 +26,7 @@ let g:mapleader=" "
 " idea
 set ideajoin
 
-"" find
+" find
 nmap <leader>fa <Action>(SearchEverywhere)
 nmap <leader>ff <Action>(GotoFile)
 nmap <leader>fc <Action>(GotoClass)
@@ -34,7 +34,7 @@ nmap <leader>fr <Action>(RecentFiles)
 nmap <leader>fw <Action>(FindInPath)
 nmap <leader>fb <Action>(Switcher)
 
-"" code jump
+" code jump
 nmap gd <Action>(GotoSuperMethod)
 nmap gD <Action>(GotoDeclaration)
 nmap gy <Action>(GotoTypeDeclaration)
@@ -43,8 +43,10 @@ nmap grr <Action>(FindUsages)
 nmap <leader>lR <Action>(FindUsages)
 nmap [d <Action>(GotoPreviousError)
 nmap ]d <Action>(GotoNextError)
+map <leader>j <Action>(AceAction)
+map <leader>k <Action>(AceLineAction)
 
-"" editing
+" editing
 nmap <leader>/ <Action>(CommentByLineComment)
 vmap <leader>/ <Action>(CommentByLineComment)<ESC>
 nmap gco o<Action>(CommentByLineComment)<ESC>
@@ -56,14 +58,14 @@ nmap <leader>lr <Action>(RenameElement)
 
 nmap K <Action>(ShowHoverInfo)
 
-"" git operation
+" git operation
 nmap <leader>gt <Action>(ActivateCommitToolWindow)
 nmap <leader>gC <Action>(Vcs.ShowTabbedFileHistory)
 nmap <leader>gr <Action>(Vcs.RollbackChangedLines)
 nmap <leader>gR <Action>(ChangesView.Revert)
 nmap <leader>gl <Action>(Annotate)
 
-"" tabs
+" tabs
 nmap [b <Action>(PreviousTab)
 nmap ]b <Action>(NextTab)
 nmap <leader>bc <Action>(CloseAllEditorsButActive)
@@ -76,17 +78,17 @@ nmap <M-j> <action>(StretchSplitToBottom)
 nmap <M-l> <action>(StretchSplitToRight)
 nmap <M-h> <action>(StretchSplitToLeft)
 
-"" panels
+" panels
 nmap <C-h> <C-w>h
 nmap <C-l> <C-w>l
 nmap <C-k> <C-w>k
 nmap <C-j> <C-w>j
 
 nmap _ <Action>(SplitHorizontally)
-"" <Bar> is actually |
+" <Bar> is actually |
 nmap <Bar> <Action>(SplitVertically)
 
-"" debug
+" debug
 nmap <leader>dc <Action>(Debug)
 nmap <leader>dq <Action>(Stop)
 nmap <leader>db <Action>(ToggleLineBreakpoint)
@@ -95,33 +97,18 @@ nmap <leader>di <Action>(StepInto)
 nmap <leader>dO <Action>(StepOut)
 nmap <leader>dE <Action>(EvaluateExpression)
 
-"" VISUAL 模式下 * 搜索选中内容
-vmap * "ry/<C-R>r<CR>
-
-"" 快速关闭上次搜索结果高亮
-nmap <leader>nh :nohlsearch<CR>
-
-" 插件
-" 高亮 yank 的文本
-Plug 'machakann/vim-highlightedyank'
-" Commentary plugin
-Plug 'tpope/vim-commentary'
-" matchit.vim
-Plug 'vim-matchit'
-" NERDTree
+" plugins
+Plug 'justinmk/vim-sneak'
 Plug 'preservim/nerdtree'
 nmap <leader>e :NERDTreeToggle<CR>
-" surround
-Plug "tpope/vim-surround"
-" sneak
-Plug 'justinmk/vim-sneak'
 
-" 输入法切换
 set keep-english-in-normal
 set which-key
 set notimeout
 set sneak
-set visualbell
-set noerrorbells
+set peekaboo
+set surround
+set commentary
+set highlightedyank
 
 let g:WhichKey_ShowVimActions = "true"
