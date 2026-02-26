@@ -18,7 +18,6 @@ set hlsearch
 set incsearch
 set ignorecase
 set smartcase
-nmap <leader>nh :nohlsearch<CR>
 
 let mapleader=" "
 let g:mapleader=" "
@@ -43,8 +42,6 @@ nmap grr <Action>(FindUsages)
 nmap <leader>lR <Action>(FindUsages)
 nmap [d <Action>(GotoPreviousError)
 nmap ]d <Action>(GotoNextError)
-map <leader>j <Action>(AceAction)
-map <leader>k <Action>(AceLineAction)
 
 " editing
 nmap <leader>/ <Action>(CommentByLineComment)
@@ -87,6 +84,7 @@ nmap <C-j> <C-w>j
 nmap _ <Action>(SplitHorizontally)
 " <Bar> is actually |
 nmap <Bar> <Action>(SplitVertically)
+nmap <leader>nh :nohlsearch<CR>
 
 " debug
 nmap <leader>dc <Action>(Debug)
@@ -110,5 +108,7 @@ set peekaboo
 set surround
 set commentary
 set highlightedyank
+set easymotion
+set anyobject
 
 let g:WhichKey_ShowVimActions = "true"
