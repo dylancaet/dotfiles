@@ -11,7 +11,6 @@ set showcmd
 set showmode
 set visualbell
 set noerrorbells
-nmap <leader>uw <Action>(EditorToggleUseSoftWraps)
 
 " search
 set hlsearch
@@ -27,11 +26,12 @@ set ideajoin
 
 " find
 nmap <leader>fa <Action>(SearchEverywhere)
-nmap <leader>ff <Action>(GotoFile)
+nmap <leader>ff <Action>(com.mituuz.fuzzier.search.Fuzzier)
+nmap <leader>fg <Action>(com.mituuz.fuzzier.search.FuzzierVCS)
 nmap <leader>fc <Action>(GotoClass)
-nmap <leader>fr <Action>(RecentFiles)
-nmap <leader>fw <Action>(FindInPath)
-nmap <leader>fb <Action>(Switcher)
+nmap <leader>ft <Action>(com.mituuz.fuzzier.grep.FuzzyGrepOpenTabsCI)
+nmap <leader>fw <Action>(com.mituuz.fuzzier.grep.FuzzyGrepCI)
+nmap <leader>fb <Action>(com.mituuz.fuzzier.search.FuzzierOpenTabs)
 
 " code jump
 nmap gd <Action>(GotoSuperMethod)
@@ -70,6 +70,12 @@ nmap <leader>bC <Action>(CloseAllEditors)
 nmap <leader>bl <Action>(CloseAllToTheLeft)
 nmap <leader>br <Action>(CloseAllToTheRight)
 nmap <leader>c <Action>(CloseContent)
+nmap <leader>b1 <Action>(GoToTab1)
+nmap <leader>b2 <Action>(GoToTab2)
+nmap <leader>b3 <Action>(GoToTab3)
+nmap <leader>b4 <Action>(GoToTab4)
+nmap <leader>b5 <Action>(GoToTab5)
+nmap <leader>b6 <Action>(GoToTab6)
 nmap <M-k> <action>(StretchSplitToTop)
 nmap <M-j> <action>(StretchSplitToBottom)
 nmap <M-l> <action>(StretchSplitToRight)
@@ -85,6 +91,7 @@ nmap _ <Action>(SplitHorizontally)
 " <Bar> is actually |
 nmap <Bar> <Action>(SplitVertically)
 nmap <leader>nh :nohlsearch<CR>
+nmap <leader>uw <Action>(EditorToggleUseSoftWraps)
 
 " debug
 nmap <leader>dc <Action>(Debug)
@@ -95,20 +102,61 @@ nmap <leader>di <Action>(StepInto)
 nmap <leader>dO <Action>(StepOut)
 nmap <leader>dE <Action>(EvaluateExpression)
 
+" Search for string in visible area and jump
+nmap s <Action>(flash.search)
+xmap s <Action>(flash.search)
+" enhance vim f (find for char in characters to the right of the current cursor)
+nmap f <Action>(flash.find)
+xmap f <Action>(flash.find)
+" enhance vim F (find for char in characters to the left of the current cursor)
+nmap F <Action>(flash.find_backward)
+xmap F <Action>(flash.find_backward)
+" enhance vim t (till for char in characters to the right of the current cursor)
+nmap t <Action>(flash.till)
+xmap t <Action>(flash.till)
+" enhance vim T (till for char in characters to the left of the current cursor)
+nmap T <Action>(flash.till_backward)
+xmap T <Action>(flash.till_backward)
+" enhance vim ; (Repeat the last f/F/t/T search)
+nmap ; <Action>(flash.repeat)
+xmap ; <Action>(flash.repeat)
+" enhance vim , (Repeat the last f/F/t/T search backward)
+nmap , <Action>(flash.repeat_backward)
+xmap , <Action>(flash.repeat_backward)
+" syntax node expansion (flash.nvim treesitter equivalent)
+nmap S <Action>(flash.treesitter)
+xmap S <Action>(flash.treesitter)
+" remote operator (after pressing an operator like d, use r to pick target line remotely)
+omap r <Action>(flash.remote)
+
+" harpoon
+nmap <leader><C-1> :action SetHarpoon1<cr>
+nmap <leader><C-2> :action SetHarpoon2<cr>
+nmap <leader><C-3> :action SetHarpoon3<cr>
+nmap <leader><C-4> :action SetHarpoon4<cr>
+
+nmap <C-1> :action GotoHarpoon1<cr>
+nmap <C-2> :action GotoHarpoon2<cr>
+nmap <C-3> :action GotoHarpoon3<cr>
+nmap <C-4> :action GotoHarpoon4<cr>
+
+nmap <C-e> :action ShowHarpoon<cr>
+nmap <C-a> :action AddToHarpoon<cr>
+
+" custom bindings
+nmap <leader>fs :action SaveAll<cr>
+
 " plugins
-Plug 'justinmk/vim-sneak'
 Plug 'preservim/nerdtree'
 nmap <leader>e :NERDTreeToggle<CR>
 
 set keep-english-in-normal
 set which-key
 set notimeout
-set sneak
 set peekaboo
 set surround
 set commentary
 set highlightedyank
-set easymotion
 set anyobject
+set quickscope
 
-let g:WhichKey_ShowVimActions = "true"
