@@ -4,6 +4,7 @@ vim.g.maplocalleader = ' '
 
 -- For conciseness
 local opts = { noremap = true, silent = true }
+local vscode = require('vscode')
 
 -- Disable the spacebar key's default behavior in Normal and Visual modes
 vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
@@ -16,23 +17,19 @@ vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = tr
 vim.keymap.set('n', '<leader>nh', ':noh<CR>', opts)
 
 -- file
-vim.keymap.set('n', '<leader>fs', '<cmd>wa<CR>', opts) -- save
+vim.keymap.set('n', 'fs', '<cmd> w <CR>', opts) -- save
 vim.keymap.set('n', '<C-q>', '<cmd> q <CR>', opts) -- quit
-vim.keymap.set('n', '<leader>e', ':Neotree float reveal toggle<CR>', opts) -- quit
+vim.keymap.set('n', '<leader>e', function()
+	vscode.action('workbench.action.toggleSidebarVisibility')
+	-- vscode.action('workbench.view.explorer')
+	-- vscode.action('workbench.files.action.showActiveFileInExplorer')
+end, opts) -- file system
 
--- directory
-vim.keymap.set('n', '<leader>dc', '<cmd>CdProject<CR>', opts)
-vim.keymap.set('n', '<leader>ds', '<cmd>CdProjectManualAdd<CR>', opts)
+-- treesitter
 
--- annotations
-vim.keymap.set("n", "<Leader>nf", "<cmd>lua require('neogen').generate()<CR>", opts)
-
--- notifications
-vim.keymap.set("n", "<Leader>nn", "<cmd>lua require('snacks.notifier').show_history()<CR>", opts)
 
 -- lsp
 vim.keymap.set({ "n", "x" }, "gra", function()
-	require("tiny-code-action").code_action()
 end, opts)
 vim.keymap.set("n", "<leader>lh", "<cmd>InlayHintsToggle<CR>", vim.tbl_extend("force", opts, { desc = "Toggle inlay hints", }))
 

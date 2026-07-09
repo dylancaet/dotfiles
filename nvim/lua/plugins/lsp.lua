@@ -1,5 +1,6 @@
 return {
-    { "neovim/nvim-lspconfig",
+    {
+        "neovim/nvim-lspconfig",
         dependencies = {
             "mason-org/mason.nvim",
             "mason-org/mason-lspconfig.nvim",
@@ -23,6 +24,7 @@ return {
                     local INSTALL_THESE_LSPS = {
                         "lua_ls",
                         "vtsls",
+                        "roslyn_ls",
                     }
                     local INSTALL_THESE_TOOLS = { -- not actually used
                         "eslint_d",
@@ -85,13 +87,37 @@ return {
                     },
                 },
             })
+            vim.lsp.config("roslyn", {
+                settings = {
+                    ["csharp|inlay_hints"] = {
+                        csharp_enable_inlay_hints_for_implicit_object_creation = true,
+                        csharp_enable_inlay_hints_for_implicit_variable_types = true,
+                        csharp_enable_inlay_hints_for_lambda_parameter_types = true,
+                        csharp_enable_inlay_hints_for_types = true,
+                        dotnet_enable_inlay_hints_for_indexer_parameters = true,
+                        dotnet_enable_inlay_hints_for_literal_parameters = true,
+                        dotnet_enable_inlay_hints_for_object_creation_parameters = true,
+                        dotnet_enable_inlay_hints_for_other_parameters = true,
+                        dotnet_enable_inlay_hints_for_parameters = true,
+                        dotnet_suppress_inlay_hints_for_parameters_that_differ_only_by_suffix = false,
+                        dotnet_suppress_inlay_hints_for_parameters_that_match_argument_name = false,
+                        dotnet_suppress_inlay_hints_for_parameters_that_match_method_intent = false,
+                    },
+                },
+            })
 
             require("mason-lspconfig").setup({
                 ensure_installed = INSTALL_THESE_LSPS,
                 automatic_enable = true,
             })
 
+            local cmp_autopairs = require('nvim-autopairs.completion.cmp')
             local cmp = require("cmp")
+
+            cmp.event:on(
+                'confirm_done',
+                cmp_autopairs.on_confirm_done()
+            )
 
             cmp.setup({
                 sources = {

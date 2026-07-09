@@ -1,14 +1,14 @@
 return {
-  'nvim-treesitter/nvim-treesitter',
-  dependencies = { "nvim-treesitter/nvim-treesitter-textobjects", branch = "main", },
-  lazy = false,
-  build = ':TSUpdate',
-  init = function()
+    'nvim-treesitter/nvim-treesitter',
+    dependencies = { "nvim-treesitter/nvim-treesitter-textobjects", branch = "main", },
+    lazy = false,
+    build = ':TSUpdate',
+    init = function()
         vim.g.no_plugin_maps = true
     end,
-  config = function(_, opts)
-		-- treesitter-textobjects
-		require("nvim-treesitter-textobjects").setup {
+    config = function(_, opts)
+        -- treesitter-textobjects
+        require("nvim-treesitter-textobjects").setup {
             select = {
                 -- Automatically jump forward to textobj, similar to targets.vim
                 lookahead = true,
@@ -26,41 +26,54 @@ return {
                 set_jumps = true,
             },
         }
-  
-		-- These come pre-built with Neovim so no need to re-install
-		local pre_installed_parsers = {
-			"c",
-			"lua",
-			"markdown",
-			"markdown_inline",
-			"query",
-			"vim",
-			"vimdoc",
-		}
-		
-		-- From https://github.com/nvim-treesitter/nvim-treesitter/issues/8221#issuecomment-3436658280
-		vim.api.nvim_create_autocmd("FileType", {
-			group = config_augroup,
-			callback = function(args)
-				local treesitter = require('nvim-treesitter')
-				local lang = vim.treesitter.language.get_lang(args.match)
-				if vim.list_contains(treesitter.get_available(), lang) then
-					if not vim.list_contains(treesitter.get_installed(), lang)
-						and not vim.list_contains(pre_installed_parsers, lang) then
-						treesitter.install(lang):wait()
-					end
-					vim.treesitter.start(args.buf)
-				end
-			end,
-			desc = "Enable nvim-treesitter and install parser if not installed"
-		})
 
-		-- Selects
+        require("nvim-treesitter.config").setup({
+            indent = { enable = true }
+        })
+
+        -- These come pre-built with Neovim so no need to re-install
+        local pre_installed_parsers = {
+            "c",
+            "lua",
+            "markdown",
+            "markdown_inline",
+            "query",
+            "vim",
+            "vimdoc",
+        }
+
+        -- From https://github.com/nvim-treesitter/nvim-treesitter/issues/8221#issuecomment-3436658280
+        vim.api.nvim_create_autocmd("FileType", {
+            group = config_augroup,
+            callback = function(args)
+                local treesitter = require('nvim-treesitter')
+                local lang = vim.treesitter.language.get_lang(args.match)
+                if vim.list_contains(treesitter.get_available(), lang) then
+                    if not vim.list_contains(treesitter.get_installed(), lang)
+                        and not vim.list_contains(pre_installed_parsers, lang) then
+                        treesitter.install(lang):wait()
+                    end
+                    vim.treesitter.start(args.buf)
+                end
+            end,
+            desc = "Enable nvim-treesitter and install parser if not installed"
+        })
+
+        vim.api.nvim_create_autocmd("FileType", {
+            group = config_augroup,
+            pattern = { "typescript", "typescriptreact", "javascript", "javascriptreact" },
+            callback = function()
+                vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+            end,
+            desc = "Use treesitter-based indent for JS/TS",
+        })
+
+        -- Selects
         local select = require "nvim-treesitter-textobjects.select"
-		vim.keymap.set({ "x", "o" }, "ia", function()
+        vim.keymap.set({ "x", "o" }, "ia", function()
             select.select_textobject("@parameter.inner", "textobjects")
         end)
-		vim.keymap.set({ "x", "o" }, "aa", function()
+        vim.keymap.set({ "x", "o" }, "aa", function()
             select.select_textobject("@parameter.outer", "textobjects")
         end)
         vim.keymap.set({ "x", "o" }, "am", function()
@@ -78,6 +91,14 @@ return {
         -- You can also use captures from other query groups like `locals.scm`
         vim.keymap.set({ "x", "o" }, "as", function()
             select.select_textobject("@local.scope", "locals")
+        end)
+
+        vim.keymap.set({ "o", "x" }, "al", function()
+            select.select_textobject("@assignment.lhs", "textobjects")
+        end)
+
+        vim.keymap.set({ "o", "x" }, "ar", function()
+            select.select_textobject("@assignment.rhs", "textobjects")
         end)
 
         -- Swaps
@@ -125,6 +146,5 @@ return {
         vim.keymap.set({ "n", "x", "o" }, "[]", function()
             move.goto_previous_end("@class.outer", "textobjects")
         end)
-
-  end,
+    end,
 }

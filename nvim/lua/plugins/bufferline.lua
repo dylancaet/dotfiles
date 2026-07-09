@@ -38,13 +38,13 @@ return {
         show_buffer_close_icons = true,
         show_close_icon = true,
         persist_buffer_sort = true, -- whether or not custom sorted buffers should persist
-        separator_style = 'slant', -- | "thick" | "thin" | { 'any', 'any' },
+        separator_style = 'thick', -- | "thick" | "thin" | { 'any', 'any' },
         enforce_regular_tabs = true,
         always_show_bufferline = true,
-        show_tab_indicators = false,
+        show_tab_indicators = true,
         indicator = {
-          -- icon = '▎', -- this should be omitted if indicator style is not 'icon'
-          style = 'none', -- Options: 'icon', 'underline', 'none'
+          icon = '▎', -- this should be omitted if indicator style is not 'icon'
+          style = 'icon', -- Options: 'icon', 'underline', 'none'
         },
         icon_pinned = '󰐃',
         minimum_padding = 1,
@@ -63,7 +63,9 @@ return {
           bold = true,
           italic = false,
         },
-        -- separator_selected = {},
+        indicator_selected = {
+			fg = '#11cd2f',
+		},
         -- tab_selected = {},
         -- background = {},
         -- indicator_selected = {},

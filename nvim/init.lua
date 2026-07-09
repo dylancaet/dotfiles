@@ -1,5 +1,4 @@
-require 'core.options' -- load options
-require 'core.keymaps' -- load general keymaps
+
 
 -- pckg manager
 local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
@@ -20,23 +19,30 @@ vim.g.nvim_tree_respect_buf_cwd = 1
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 
+require 'core.options' -- load options
+
 -- plugins
+require 'core.keymaps' -- load general keymaps
 require('lazy').setup({
-   require 'plugins.which-key',
-   require 'plugins.themify',
-   require 'plugins.lualine',
-   require 'plugins.flash',
-   require 'plugins.bufferline',
-   require 'plugins.neo-tree',
-   require 'plugins.lsp',
-   require 'plugins.treesitter',
-   require 'plugins.nvim-surround',
-   require 'plugins.nvim-autopairs',
-   require 'plugins.harpoon',
-   require 'plugins.code-action',
-   require 'plugins.fff',
-   require 'plugins.snacks',
+	require 'plugins.which-key',
+	require 'plugins.themify',
+	require 'plugins.lualine',
+	require 'plugins.flash',
+	require 'plugins.bufferline',
+	require 'plugins.neo-tree',
+	require 'plugins.lsp',
+	require 'plugins.treesitter',
+	require 'plugins.nvim-surround',
+	require 'plugins.nvim-autopairs',
+	require 'plugins.harpoon',
+	require 'plugins.code-action',
+	require 'plugins.fff',
+	require 'plugins.snacks',
+	require 'plugins.cd-project',
+	require 'plugins.comment',
+	require 'plugins.neogen',
 })
+
 
 -- restore session
 local function file_exists(file)
