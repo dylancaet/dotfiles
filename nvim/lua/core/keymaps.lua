@@ -17,15 +17,22 @@ vim.keymap.set('n', '<leader>nh', ':noh<CR>', opts)
 
 -- file
 vim.keymap.set('n', '<leader>fs', '<cmd>wa<CR>', opts) -- save
+vim.keymap.set('n', '<leader>fr', function() 
+    require("fff").scan_files()
+end, opts) -- save
 vim.keymap.set('n', '<C-q>', '<cmd> q <CR>', opts) -- quit
 vim.keymap.set('n', '<leader>e', ':Neotree float reveal toggle<CR>', opts) -- quit
 
 -- directory
 vim.keymap.set('n', '<leader>dc', '<cmd>CdProject<CR>', opts)
 vim.keymap.set('n', '<leader>ds', '<cmd>CdProjectManualAdd<CR>', opts)
+vim.keymap.set('n', '<leader>dd', '<cmd>CdProjectDelete<CR>', opts)
 
 -- annotations
 vim.keymap.set("n", "<Leader>nf", "<cmd>lua require('neogen').generate()<CR>", opts)
+
+-- quickfix
+vim.keymap.set("n", "<Leader>qd", "<cmd>TodoQuickFix<CR>", opts)
 
 -- notifications
 vim.keymap.set("n", "<Leader>nn", "<cmd>lua require('snacks.notifier').show_history()<CR>", opts)
@@ -67,8 +74,6 @@ vim.keymap.set("n", "<leader>br", "<cmd>BufferLineCloseRight<CR>", vim.tbl_exten
 -- Increment/decrement numbers
 vim.keymap.set('n', '<leader>+', '<C-a>', opts) -- increment
 vim.keymap.set('n', '<leader>-', '<C-x>', opts) -- decrement
-vim.keymap.set({ "n", "v" }, "<C-+>", ":lua vim.g.neovide_scale_factor = vim.g.neovide_scale_factor + 0.1<CR>")
-vim.keymap.set({ "n", "v" }, "<C-->", ":lua vim.g.neovide_scale_factor = vim.g.neovide_scale_factor - 0.1<CR>")
 
 -- Window management
 vim.keymap.set('n', '<leader>v', '<C-w>v', opts) -- split window vertically
@@ -136,6 +141,5 @@ end, { desc = 'Go to next diagnostic message' })
 vim.keymap.set('n', '<leader>d', vim.diagnostic.open_float, { desc = 'Open floating diagnostic message' })
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostics list' })
 
--- Save and load session
-vim.keymap.set('n', '<leader>ss', ':mksession! .session.vim<CR>', { noremap = true, silent = false })
-vim.keymap.set('n', '<leader>sl', ':source .session.vim<CR>', { noremap = true, silent = false })
+vim.keymap.set({ "n", "v" }, "<C-ScrollWheelUp>", ":lua vim.g.neovide_scale_factor = vim.g.neovide_scale_factor + 0.1<CR>")
+vim.keymap.set({ "n", "v" }, "<C-ScrollWheelDown>", ":lua vim.g.neovide_scale_factor = vim.g.neovide_scale_factor - 0.1<CR>")

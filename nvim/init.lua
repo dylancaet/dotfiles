@@ -19,6 +19,12 @@ vim.g.nvim_tree_respect_buf_cwd = 1
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 
+-- neovide
+--[[ if vim.g.neovide then
+    -- Put anything you want to happen only in Neovide here
+    vim.o.guifont = "Fixedsys Excelsior:h14"
+end ]]
+
 require 'core.options' -- load options
 
 -- plugins
@@ -31,7 +37,7 @@ require('lazy').setup({
 	require 'plugins.bufferline',
 	require 'plugins.neo-tree',
 	require 'plugins.lsp',
-	require 'plugins.treesitter',
+    require 'plugins.treesitter',
 	require 'plugins.nvim-surround',
 	require 'plugins.nvim-autopairs',
 	require 'plugins.harpoon',
@@ -41,6 +47,8 @@ require('lazy').setup({
 	require 'plugins.cd-project',
 	require 'plugins.comment',
 	require 'plugins.neogen',
+	require 'plugins.todo',
+	--[[ require 'plugins.gitsigns', ]]
 })
 
 

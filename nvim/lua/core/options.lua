@@ -1,6 +1,12 @@
 vim.o.winborder = 'single' -- border style
-vim.opt.title = true
-vim.opt.titlestring = vim.fs.basename(vim.fn.getcwd())
+vim.o.foldmethod = "expr"
+vim.o.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+vim.o.foldlevel = 99
+vim.o.foldnestmax = 4
+vim.o.foldlevelstart = 4
+vim.o.foldtext = ""
+vim.o.title = true
+vim.o.titlestring = vim.fs.basename(vim.fn.getcwd())
 vim.o.hlsearch = true                                -- Set highlight on search
 vim.wo.number = true                                 -- Make line numbers default
 vim.o.mouse = 'a'                                    -- Enable mouse mode
